@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/combine/npm/@zendeskgarden/css-bedrock@7.0.21,npm/@zendeskgarden/css-utilities@4.3.0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <label for="datepicker">Select a date:</label>
+    <input type="date" id="datepicker" name="datepicker" />
+    <div id="content"></div>
+
+    <!-- Modal container -->
+    <div class="modal-container" id="modal-container">
+      <div class="modal-content">
+        <!-- Close button -->
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <!-- Image inside the modal -->
+        <img src="" alt="Modal Image" id="modal-image" />
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@4.3.3/dist/handlebars.min.js"></script>
+    <script src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
