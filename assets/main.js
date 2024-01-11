@@ -1,14 +1,10 @@
-(function () {
-  // Creating an instance in the client and resizing it
-  var client = ZAFClient.init();
-  client.invoke("resize", { width: "100%", height: "600px" });
-})();
+// Creating an instance in the client and resizing it
+var client = ZAFClient.init();
+client.invoke("resize", { width: "100%", height: "600px" });
 
 // Variables we're going to need
 const API_KEY = "nPlBkkllcCfkvf6wvwM45zv8tOrnyX6btSAPn1KC";
 const NASA_API = "https://api.nasa.gov/planetary/apod";
-const modalContainer = document.getElementById("modal-container");
-const modalImage = document.getElementById("modal-image");
 let modalTrigger;
 
 // Setting our datepicker
@@ -19,6 +15,27 @@ const tzoffset = new Date().getTimezoneOffset() * 60000;
 const today = new Date(Date.now() - tzoffset).toISOString().split("T")[0];
 datePicker.setAttribute("max", today);
 datePicker.value = today;
+
+function openModal() {
+  client
+    .invoke("instances.create", {
+      location: "modal",
+      url: "assets/imageContainer.html",
+      size: {
+        width: "420px",
+        height: "350px",
+      },
+    })
+    .then(function (modalContext) {
+      // The modal is on screen now
+      var modalClient = client.instance(
+        modalContext["instances.create"][0].instanceGuid
+      );
+      modalClient.on("modal.close", function () {
+        // The modal has been closed
+      });
+    });
+}
 
 // Fetching the img from NASA's API
 const fetchImage = async () => {
@@ -33,11 +50,10 @@ const fetchImage = async () => {
       <p><b>Image: </b></p>
       <img id="modal-trigger" width="100px" src="${res.url}" />
     `;
-    
+    localStorage.setItem("imgUrl", res.url)
     modalTrigger = document.getElementById("modal-trigger");
     modalTrigger.addEventListener("click", function () {
-      modalImage.src = this.src;
-      modalContainer.style.display = "flex";
+      openModal();
     });
   } catch (error) {
     console.log(error);
@@ -49,8 +65,3 @@ fetchImage();
 datePicker.addEventListener("change", function () {
   fetchImage();
 });
-
-// Function to close the modal
-function closeModal() {
-  modalContainer.style.display = "none";
-}

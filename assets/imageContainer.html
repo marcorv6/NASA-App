@@ -1,0 +1,10 @@
+<img id="img" width="400px" />
+<script>
+  const imageData = localStorage.getItem("imgUrl");
+  const imageElement = document.getElementById("img");
+  if (imageData) {
+    imageElement.src = imageData;
+  } else {
+    console.error("No image data found in localStorage.");
+  }
+</script>
